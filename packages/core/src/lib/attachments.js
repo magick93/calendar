@@ -1,13 +1,23 @@
+import { mount, unmount } from 'svelte';
 
 export function contentFrom(content) {
     return el => {
+        let comp;
         if (typeof content == 'string') {
             el.innerText = content;
         } else if (content?.domNodes) {
             el.replaceChildren(...content.domNodes);
         } else if (content?.html) {
             el.innerHTML = content.html;
+        } else if (content?.component) {
+            comp = mount(content.component, {
+                target: el,
+                props: content.props
+            });
         }
+        return () => {
+            if (comp) unmount(comp);
+        };
     };
 }
 
@@ -17,7 +27,7 @@ export function outsideEvent(type) {
         let listener = jsEvent => {
             if (el && !el.contains(jsEvent.target)) {
                 el.dispatchEvent(
-                    new CustomEvent(type + 'outside', {detail: {jsEvent}})
+                    new CustomEvent(type + 'outside', { detail: { jsEvent } })
                 );
             }
         };
