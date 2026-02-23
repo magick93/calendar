@@ -84,7 +84,13 @@
     {onpointerdown}
 >
     {#snippet defaultBody()}
-        <div class={theme.eventBody} {@attach contentFrom(content)}></div>
+        {#if content?.component}
+            <div class={theme.eventBody}>
+                <content.component {...content.props} />
+            </div>
+        {:else}
+            <div class={theme.eventBody} {@attach contentFrom(content)}></div>
+        {/if}
     {/snippet}
     {#if body}
         {@render body(defaultBody, bgColor, txtColor)}

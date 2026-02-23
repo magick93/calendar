@@ -2929,6 +2929,7 @@ The content value can be presented in the following forms:
 * a string containing text `'some text'`
 * an object containing the HTML string `{html: '<p>some HTML</p>'}`
 * an object containing an array of DOM nodes `{domNodes: [node1, node2, ...]}`
+* an object containing a Svelte component `{component: MyComponent, props: {key: 'value'}}`
 
 ## Event object
 This is a JavaScript object that EventCalendar uses to store information about a calendar event.
